@@ -8,9 +8,9 @@ description = "gRPC Ledger API client for Canton OmniChain SDK"
 [dependencies]
 canton-core = { path = "../canton-core" }
 tonic = { version = "0.13", features = ["tls-ring", "tls-webpki-roots", "gzip"] }
-prost = "0.12"
-prost-types = "0.12"
-tokio = { version = "1", features = ["rt-multi-thread"] }
+prost = "0.13"
+prost-types = "0.13"
+tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
 tokio-stream = "0.1"
 futures = "0.3"
 

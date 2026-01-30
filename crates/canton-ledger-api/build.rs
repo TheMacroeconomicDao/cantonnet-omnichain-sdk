@@ -3,6 +3,7 @@
 use std::path::Path;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
+    println!("cargo:rustc-check-cfg=cfg(proto_compiled)");
     let proto_dir = Path::new("proto");
     let v2_dir = proto_dir.join("com/daml/ledger/api/v2");
 
@@ -15,7 +16,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     tonic_build::configure()
         .build_server(false)
         .build_client(true)
-        .compile(
+        .include_file("generated.rs")
+        .compile_protos(
             &[
                 v2_dir.join("command_service.proto"),
                 v2_dir.join("command_submission_service.proto"),

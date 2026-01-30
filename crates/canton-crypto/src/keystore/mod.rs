@@ -19,7 +19,7 @@ impl KeyFingerprint {
     pub fn compute(public_key: &[u8], algorithm: KeyAlgorithm) -> Self {
         use sha2::{Digest, Sha256};
         let mut hasher = Sha256::new();
-        hasher.update(&[algorithm as u8]);
+        hasher.update([algorithm as u8]);
         hasher.update(public_key);
         let result = hasher.finalize();
         let mut fingerprint = [0u8; 32];
@@ -28,12 +28,12 @@ impl KeyFingerprint {
     }
 
     pub fn to_hex(&self) -> String {
-        hex::encode(&self.0)
+        hex::encode(self.0)
     }
 
     pub fn to_base64(&self) -> String {
         use base64::Engine;
-        base64::engine::general_purpose::STANDARD.encode(&self.0)
+        base64::engine::general_purpose::STANDARD.encode(self.0)
     }
 }
 

@@ -61,12 +61,15 @@ proto/
 1. **Из Daml SDK (релиз)**  
    Скачать `protobufs-*.zip` из https://github.com/digital-asset/daml/releases, распаковать и скопировать `com/daml/ledger/api/v2/` (и при необходимости v1) в `proto/com/daml/ledger/api/`.
 
-2. **Клон репо daml**  
+2. **Клон репо daml (Canton proto)**  
    ```bash
    git clone --depth 1 https://github.com/digital-asset/daml.git /tmp/daml
-   cp -r /tmp/daml/ledger-api/grpc-definitions/src/main/protobuf/com/daml/ledger/api/* \
+   cp -r /tmp/daml/sdk/canton/community/ledger-api-proto/src/main/protobuf/com/daml/ledger/api/* \
          crates/canton-ledger-api/proto/com/daml/ledger/api/
+   cp /tmp/daml/sdk/canton/community/daml-lf/ledger-api-value/src/main/protobuf/com/daml/ledger/api/v2/value.proto \
+         crates/canton-ledger-api/proto/com/daml/ledger/api/v2/
    ```
+   Добавить `proto/google/protobuf/` (timestamp, duration, empty, field_mask) из protobuf repo или оставить текущие копии в репо.
 
 3. **Git submodule** (опционально)  
    Добавить `ledger-api/grpc-definitions` как submodule и в `build.rs` указывать путь на submodule (либо копировать файлы скриптом в `proto/` при сборке).

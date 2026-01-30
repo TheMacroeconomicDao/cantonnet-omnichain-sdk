@@ -59,7 +59,7 @@ impl KeyStore for InMemoryKeyStore {
     async fn generate_key(
         &self,
         algorithm: KeyAlgorithm,
-        purpose: KeyPurpose,
+        _purpose: KeyPurpose,
         metadata: KeyMetadata,
     ) -> Result<KeyFingerprint, KeyStoreError> {
         let (signing_inner, verifying_inner, fingerprint) = match algorithm {
@@ -80,7 +80,7 @@ impl KeyStore for InMemoryKeyStore {
                 let pk = verifying.to_encoded_point(false);
                 let fp = KeyFingerprint::compute(pk.as_bytes(), algorithm);
                 (
-                    SigningKeyInner::EcdsaP256(signing.to_bytes().as_slice().to_vec()),
+                    SigningKeyInner::EcdsaP256(signing.to_bytes().to_vec()),
                     VerifyingKeyInner::EcdsaP256(pk.as_bytes().to_vec()),
                     fp,
                 )
@@ -92,7 +92,7 @@ impl KeyStore for InMemoryKeyStore {
                 let pk = verifying.to_encoded_point(false);
                 let fp = KeyFingerprint::compute(pk.as_bytes(), algorithm);
                 (
-                    SigningKeyInner::EcdsaSecp256k1(signing.to_bytes().as_slice().to_vec()),
+                    SigningKeyInner::EcdsaSecp256k1(signing.to_bytes().to_vec()),
                     VerifyingKeyInner::EcdsaSecp256k1(pk.as_bytes().to_vec()),
                     fp,
                 )
@@ -118,7 +118,7 @@ impl KeyStore for InMemoryKeyStore {
         &self,
         key_bytes: &[u8],
         algorithm: KeyAlgorithm,
-        purpose: KeyPurpose,
+        _purpose: KeyPurpose,
         metadata: KeyMetadata,
     ) -> Result<KeyFingerprint, KeyStoreError> {
         let (signing_inner, verifying_inner, fingerprint) = match algorithm {
@@ -212,14 +212,14 @@ impl KeyStore for InMemoryKeyStore {
             }
             SigningKeyInner::EcdsaP256(key_bytes) => {
                 use p256::ecdsa::{signature::Signer, Signature, SigningKey};
-                let k = SigningKey::from_slice(&key_bytes)
+                let k = SigningKey::from_slice(key_bytes)
                     .map_err(|e| KeyStoreError::CryptoError(e.to_string()))?;
                 let sig: Signature = k.sign(data);
                 (KeyAlgorithm::EcdsaP256, sig.to_bytes().to_vec())
             }
             SigningKeyInner::EcdsaSecp256k1(key_bytes) => {
                 use k256::ecdsa::{signature::Signer, Signature, SigningKey};
-                let k = SigningKey::from_slice(&key_bytes)
+                let k = SigningKey::from_slice(key_bytes)
                     .map_err(|e| KeyStoreError::CryptoError(e.to_string()))?;
                 let sig: Signature = k.sign(data);
                 (KeyAlgorithm::EcdsaSecp256k1, sig.to_bytes().to_vec())
@@ -250,7 +250,7 @@ impl KeyStore for InMemoryKeyStore {
             }
             VerifyingKeyInner::EcdsaP256(key_bytes) => {
                 use p256::ecdsa::{signature::Verifier, Signature, VerifyingKey};
-                let k = VerifyingKey::from_sec1_bytes(&key_bytes)
+                let k = VerifyingKey::from_sec1_bytes(key_bytes)
                     .map_err(|e| KeyStoreError::CryptoError(e.to_string()))?;
                 let sig = Signature::from_slice(&signature.bytes)
                     .map_err(|e| KeyStoreError::CryptoError(e.to_string()))?;
@@ -258,7 +258,7 @@ impl KeyStore for InMemoryKeyStore {
             }
             VerifyingKeyInner::EcdsaSecp256k1(key_bytes) => {
                 use k256::ecdsa::{signature::Verifier, Signature, VerifyingKey};
-                let k = VerifyingKey::from_sec1_bytes(&key_bytes)
+                let k = VerifyingKey::from_sec1_bytes(key_bytes)
                     .map_err(|e| KeyStoreError::CryptoError(e.to_string()))?;
                 let sig = Signature::from_slice(&signature.bytes)
                     .map_err(|e| KeyStoreError::CryptoError(e.to_string()))?;
