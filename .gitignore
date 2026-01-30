@@ -1,0 +1,14 @@
+/target
+**/*.rs.bk
+Cargo.lock
+*.pem
+*.key
+config/local.yaml
+config/*.local.yaml
+.env
+.env.local
+.idea
+.vscode
+*.swp
+*.swo
+.DS_Store

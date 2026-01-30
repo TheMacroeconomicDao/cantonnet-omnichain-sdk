@@ -7,6 +7,48 @@
 
 ---
 
+## 📌 ПРОГРЕСС / СОСТОЯНИЕ ДЛЯ ПРОДОЛЖЕНИЯ (обновлено Jan 2025)
+
+**Что сделано:**
+
+- **canton-core**: Собирается. Типы в `types/` (identifier, value, event, command, transaction, filter, offset); порядок модулей в `types/mod.rs` — identifier → value → event → command → transaction → filter → offset (важно для разрешения импортов). `lib.rs` использует `pub mod types;` (подключается `types/mod.rs` с реэкспортами). `SdkError` — ручной `impl Display` и `impl Error` (без thiserror derive из-за стабильности с `Option<Box<dyn Error>>`); поля причины переименованы в `cause`. `TransactionErrorKind` имеет `impl Display`. thiserror 1.0 оставлен только для `ParseError` в identifier. Зависимости: thiserror 1.0, serde, chrono, rust_decimal, uuid, bytes; edition 2021, rust-version 1.75.
+- **canton-crypto**: Собирается. KeyStore trait, InMemoryKeyStore, KeyFingerprint, Signature; зависимости: thiserror 1.0, tokio (sync), base64 (use base64::Engine + engine::general_purpose::STANDARD), ed25519-dalek, p256, k256 и т.д. В memory.rs: `from_slice(&key_bytes)`, `from_sec1_bytes(&key_bytes)`, явные типы `Signature` для p256/k256 sign.
+- **canton-wallet**: Собирается. **Гибкая деривация** (research/10): `derivation.rs` — NetworkId, DerivationPath, IdentitySource, DerivationStrategy, DerivationError; `wallet.rs` — trait Wallet расширен (identity_for_network, sign_for_network, available_networks с дефолтами), MultiIdentityWallet, WalletBuilder (unified/per_chain, canton_party_hint, build_with_keystore). PerChain с KeyStore-источниками работает; Unified (mnemonic) — API готов, реализация деривации позже (bip39). party_id: PartyId::new_unchecked для доверенного формата. Зависимости: canton-core, canton-crypto, async-trait, thiserror 1.0.
+- **Workspace** (`Cargo.toml`): members — canton-core, canton-ledger-api, canton-crypto, canton-wallet, canton-transport, canton-reliability, canton-observability. Крейтов canton-sdk, canton-omnichain, canton-testing **нет** в репо — убраны из members (при создании — вернуть в members).
+- **canton-ledger-api, canton-transport**: tonic 0.13 — фичи `tls`/`tls-roots` заменены на `tls-ring`, `tls-webpki-roots` (tonic 0.13 не имеет старых имён).
+- **research/10-flexible-key-derivation.md**: дизайн Unified (одна мнемоника → пути по сетям) и PerChain (свой источник на сеть); типы и расширение Wallet API.
+
+**Следующие шаги для продолжения:**
+
+1. **Proto Ledger API v2**: положить proto по инструкции в `canton-ledger-api/proto/README.md` (источник и версия там зафиксированы); затем реализовать сервисы (command, update/transaction, state/active_contracts, party, completion).
+2. Опционально: крейты-заглушки canton-sdk, canton-omnichain, canton-testing и добавление в workspace members.
+3. Реализация деривации из мнемоники (bip39 + пути) в canton-wallet для Unified и build_with_keystore для Unified.
+4. ~~CI (check, test, clippy), README, example config~~ — сделано: `.github/workflows/ci.yml`, `README.md`, `config/example.yaml`; deny.toml, clippy.toml, .gitignore были готовы.
+
+**Проверка:** `cargo check -p canton-wallet` (или `cargo check --workspace` после добавления proto/реализации ledger-api) должен проходить.
+
+**Для нового чата** — скопируй один из промптов ниже в новый чат:
+
+**Короткий:**
+```
+Проект Canton OmniChain SDK (Rust). Прочитай блок ПРОГРЕСС в начале DEVELOPMENT_PROMPT.md и PRE_DEVELOPMENT_CHECKLIST.md. Цель — продолжить по чеклисту / следующему шагу из ПРОГРЕССА. Действуй по существующему коду и документам, все правки отражай в документах.
+```
+
+**Развёрнутый:**
+```
+Проект: Canton OmniChain SDK (Rust workspace).
+
+Перед ответом:
+1. Прочитай блок «ПРОГРЕСС / СОСТОЯНИЕ ДЛЯ ПРОДОЛЖЕНИЯ» в начале DEVELOPMENT_PROMPT.md.
+2. Прочитай PRE_DEVELOPMENT_CHECKLIST.md (что сделано, что осталось, порядок действий).
+
+Цель: продолжить работу по чеклисту — следующий незакрытый шаг из ПРОГРЕССА или из «Порядка действий» в PRE_DEVELOPMENT_CHECKLIST.
+
+Правила: опираться на реальные файлы и документы проекта; все изменения в коде и в процессе отражать в документах (ПРОГРЕСС, чеклист, proto/README.md и т.д.).
+```
+
+---
+
 ## 🎯 MISSION
 
 You are a Senior Rust Developer and Blockchain Architect tasked with implementing a **production-ready SDK platform for OmniChain integration with Canton Network**. This SDK must meet enterprise standards for reliability, security, performance, and maintainability.
@@ -51,10 +93,11 @@ canton-sdk/
 │   ├── canton-core/                    # Core types, traits, errors
 │   ├── canton-ledger-api/              # gRPC Ledger API client
 │   ├── canton-crypto/                  # Cryptographic operations
+│   ├── canton-wallet/                  # Canton external party + EVM identity (see research/09)
 │   ├── canton-transport/               # gRPC transport layer
 │   ├── canton-reliability/             # Circuit breaker, rate limiter
 │   ├── canton-observability/           # Logging, metrics, tracing
-│   ├── canton-omnichain/               # Cross-chain integration
+│   ├── canton-omnichain/               # Cross-chain integration (EVM via Alloy)
 │   └── canton-testing/                 # Test utilities
 │
 ├── tests/                              # Integration tests
@@ -68,7 +111,7 @@ canton-sdk/
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                      Public API Layer                            │
-│  CantonSdk, CantonSdkBuilder, OmniChainClient                   │
+│  CantonSdk, CantonSdkBuilder, OmniChainClient, Wallet           │
 ├─────────────────────────────────────────────────────────────────┤
 │                      Core Domain Layer                           │
 │  DamlValue, Commands, Transactions, Events, Identifiers         │
@@ -436,7 +479,7 @@ canton-crypto = { workspace = true }
 
 [features]
 default = []
-ethereum = ["ethers"]
+ethereum = ["alloy"]   # Alloy (successor to ethers-rs) for EVM; see research/09
 cosmos = ["cosmrs"]
 substrate = ["subxt"]
 ```
@@ -525,6 +568,7 @@ pub struct CantonSdkBuilder {
     pub fn new() -> Self;
     pub fn config(self, config: SdkConfig) -> Self;
     pub fn config_file(self, path: impl Into<String>) -> Self;
+    pub fn with_wallet(self, wallet: Arc<dyn Wallet>) -> Self;  // Canton party + optional EVM; see research/09
     pub fn with_omnichain(self) -> Self;
     pub async fn build(self) -> SdkResult<CantonSdk>;
 }
@@ -828,6 +872,13 @@ The following research documents provide detailed specifications:
 6. **Cryptographic Requirements** - Key management, signing, encryption, HSM
 7. **Production-Ready Patterns** - Circuit breakers, rate limiting, observability
 8. **SDK Architecture Design** - Crate structure, type hierarchy, error handling
+9. **Canton Wallet and EVM Integration** - External party (wallet) flow, Party ID format, Ledger API auth (JWT/mTLS), EVM в Rust (Alloy), Wallet + EthereumAdapter
+
+---
+
+## 📋 Перед началом разработки
+
+См. **PRE_DEVELOPMENT_CHECKLIST.md** — окружение (Rust, edition), скелет workspace, CI, README и example config. Источник и версия proto Ledger API зафиксированы в **crates/canton-ledger-api/proto/README.md** (v2).
 
 ---
 

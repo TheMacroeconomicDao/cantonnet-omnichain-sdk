@@ -1,0 +1,10 @@
+[package]
+name = "canton-observability"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+description = "Logging, metrics, tracing for Canton OmniChain SDK"
+
+[dependencies]
+canton-core = { path = "../canton-core" }
+tracing = "0.1"

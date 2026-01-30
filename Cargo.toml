@@ -1,0 +1,21 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/canton-core",
+    "crates/canton-ledger-api",
+    "crates/canton-crypto",
+    "crates/canton-wallet",
+    "crates/canton-transport",
+    "crates/canton-reliability",
+    "crates/canton-observability",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = ["Canton OmniChain SDK"]
+license = "Apache-2.0 OR MIT"
+repository = ""
+rust-version = "1.75"
+
+[workspace.dependencies]

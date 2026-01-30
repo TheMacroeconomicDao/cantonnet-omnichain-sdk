@@ -714,3 +714,11 @@ impl OmniChainClient {
 8. **Rate Limiting**: Implement rate limiting to prevent abuse
 9. **Graceful Degradation**: Handle chain unavailability gracefully
 10. **Testing**: Comprehensive testing including chaos engineering
+
+## 11. Canton Wallet and EVM Integration (Reference)
+
+Для качественной интеграции Canton Wallet (external party) и EVM в Rust SDK см. **research/09-canton-wallet-evm-integration.md**. Кратко:
+
+- **Canton Wallet**: External party = партия, контролируемая владельцем ключа; Party ID формата `partyHint::fingerprint` (Ed25519 по умолчанию); flow: generateExternalParty → sign multiHash → allocateExternalParty; подпись команд: prepareSubmission → signTransactionHash → executeSubmissionAndWait.
+- **EVM в Rust**: Использовать **Alloy** (преемник ethers-rs): `alloy-provider`, `alloy-signer` для EthereumAdapter; подпись tx и отправка через Alloy ProviderBuilder + wallet(signer).
+- **Мосты Canton ↔ EVM**: Temple Bridge (USDC, SBC, Ethereum/Base/BNB), Gravity Bridge (WETH, USDT, wstETH); SDK оркестрирует lock/release и вызов Canton команд + EVM контрактов, не дублируя логику конкретного публичного моста.

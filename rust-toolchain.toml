@@ -1,0 +1,6 @@
+[toolchain]
+channel = "stable"
+# Для edition 2024 и MSRV 1.85 раскомментировать:
+# channel = "1.85"
+# components = ["rustfmt", "clippy"]
+# profile = "minimal"

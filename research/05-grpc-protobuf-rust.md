@@ -1,5 +1,7 @@
 # gRPC and Protobuf Integration in Rust
 
+**Актуальный источник и версия proto**: см. `crates/canton-ledger-api/proto/README.md` (v2, Daml SDK / digital-asset/daml или Canton).
+
 ## 1. Overview
 
 This document covers the implementation of gRPC clients in Rust using Tonic and Prost for Canton Network SDK.

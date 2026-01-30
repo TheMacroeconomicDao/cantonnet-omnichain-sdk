@@ -1,0 +1,18 @@
+[package]
+name = "canton-ledger-api"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+description = "gRPC Ledger API client for Canton OmniChain SDK"
+
+[dependencies]
+canton-core = { path = "../canton-core" }
+tonic = { version = "0.13", features = ["tls-ring", "tls-webpki-roots", "gzip"] }
+prost = "0.12"
+prost-types = "0.12"
+tokio = { version = "1", features = ["rt-multi-thread"] }
+tokio-stream = "0.1"
+futures = "0.3"
+
+[build-dependencies]
+tonic-build = "0.13"

@@ -115,6 +115,26 @@ impl KeyFingerprint {
 }
 ```
 
+### 2.3 Canton Party ID Format (External Party / Wallet)
+
+Официальный формат Party ID для external party (wallet) в Canton: **`{partyHint}::{fingerprint}`**.
+
+- **partyHint** — человекопонятное имя (alice, bob, my-wallet-1), уникальное для данного fingerprint.
+- **fingerprint** — отпечаток публичного ключа (см. KeyFingerprint); в документации Canton часто в виде hex (например `1220` + 32 байта в hex для protobuf/ledger).
+
+```rust
+/// Build Canton external party ID from hint and public key fingerprint
+pub fn canton_party_id(party_hint: &str, fingerprint: &KeyFingerprint) -> String {
+    format!("{}::{}", party_hint, fingerprint.to_hex())
+}
+```
+
+Валидация PartyId в canton-core должна допускать формат `hint::hex` (см. research/09-canton-wallet-evm-integration.md).
+
+### 2.4 BIP-39 Mnemonic (Canton and EVM)
+
+Canton поддерживает генерацию ключей из мнемоники по **BIP-39**: мнемоника → seed (PBKDF2) → первые 32 байта seed как приватный ключ Ed25519 для Canton. Для EVM используется тот же seed с путём деривации (например BIP-44: m/44'/60'/0'/0/0). В Rust: крейты `bip39`, `ed25519-dalek` для Canton; `bip39` + `k256` (или Alloy) для EVM.
+
 ## 3. Key Management
 
 ### 3.1 Key Store Interface
@@ -1152,20 +1172,25 @@ impl MultiChainAddressDeriver {
         Self { master_key }
     }
     
-    /// Derive Canton party ID
-    pub fn derive_canton_party(&self, index: u32) -> Result<String, CryptoError> {
+    /// Derive Canton party ID (external party / wallet format: partyHint::fingerprint)
+    pub fn derive_canton_party(
+        &self,
+        index: u32,
+        party_hint: &str,
+    ) -> Result<String, CryptoError> {
         let path = format!("canton/party/{}", index);
         let derived = self.derive_key(&path)?;
         
         // Generate Ed25519 key from derived bytes
         let signing_key = SigningKey::from_bytes(&derived);
         let verifying_key = signing_key.verifying_key();
+        let fingerprint = KeyFingerprint::compute(
+            verifying_key.as_bytes(),
+            KeyAlgorithm::Ed25519,
+        );
         
-        // Canton party ID format
-        Ok(format!(
-            "party::{}",
-            hex::encode(verifying_key.as_bytes())
-        ))
+        // Canton external party ID format: partyHint::fingerprint (see 09)
+        Ok(format!("{}::{}", party_hint, fingerprint.to_hex()))
     }
     
     /// Derive Ethereum address

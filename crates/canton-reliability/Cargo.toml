@@ -1,0 +1,10 @@
+[package]
+name = "canton-reliability"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+description = "Circuit breaker, rate limiter, retry for Canton OmniChain SDK"
+
+[dependencies]
+canton-core = { path = "../canton-core" }
+tokio = { version = "1", features = ["sync", "time"] }

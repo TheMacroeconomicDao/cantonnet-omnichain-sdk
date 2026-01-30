@@ -1,0 +1,8 @@
+[alias]
+b = "build"
+t = "test"
+c = "check"
+cl = "clippy"
+
+[net]
+git-fetch-with-cli = true

@@ -1,0 +1,24 @@
+[package]
+name = "canton-crypto"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+description = "Cryptographic operations and key management for Canton OmniChain SDK"
+
+[dependencies]
+canton-core = { path = "../canton-core" }
+async-trait = "0.1"
+ed25519-dalek = { version = "2.1", features = ["rand_core"] }
+p256 = { version = "0.13", features = ["ecdsa"] }
+k256 = { version = "0.13", features = ["ecdsa"] }
+sha2 = "0.10"
+rand = "0.8"
+zeroize = { version = "1.8", features = ["derive"] }
+chrono = { version = "0.4", features = ["serde"] }
+hex = "0.4"
+base64 = "0.22"
+thiserror = "1.0"
+tokio = { version = "1", features = ["sync", "rt-multi-thread", "macros"] }
+
+[dev-dependencies]
+tokio = { version = "1", features = ["rt-multi-thread", "macros"] }

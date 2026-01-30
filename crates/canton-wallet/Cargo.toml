@@ -1,0 +1,15 @@
+[package]
+name = "canton-wallet"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+description = "Canton external party and EVM identity (wallet) for Canton OmniChain SDK"
+
+[dependencies]
+canton-core = { path = "../canton-core" }
+canton-crypto = { path = "../canton-crypto" }
+async-trait = "0.1"
+thiserror = "1.0"
+
+[dev-dependencies]
+tokio = { version = "1", features = ["rt", "macros"] }

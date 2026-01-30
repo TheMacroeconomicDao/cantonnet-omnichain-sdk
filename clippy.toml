@@ -1,0 +1,5 @@
+avoid-breaking-exported-api = false
+single-char-binding-names-threshold = 15
+too-many-arguments-threshold = 10
+type-complexity-threshold = 250
+verbose-group-matches = true

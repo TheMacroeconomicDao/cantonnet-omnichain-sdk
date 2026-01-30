@@ -12,6 +12,9 @@
 │  │  ┌──────────────┐ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐      │ │
 │  │  │ CantonClient │ │OmniChainClient│ │ EventStream  │ │  Builders    │      │ │
 │  │  └──────────────┘ └──────────────┘ └──────────────┘ └──────────────┘      │ │
+│  │  ┌──────────────┐                                                           │ │
+│  │  │    Wallet    │   # Canton external party + EVM identity (see 09)        │ │
+│  │  └──────────────┘                                                           │ │
 │  └────────────────────────────────────────────────────────────────────────────┘ │
 │                                      │                                           │
 │  ┌────────────────────────────────────────────────────────────────────────────┐ │
@@ -49,11 +52,14 @@
 │  │                         OmniChain Adapter Layer                             │ │
 │  │  ┌──────────────┐ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐      │ │
 │  │  │CantonAdapter │ │EthereumAdapter│ │ CosmosAdapter│ │SubstrateAdapter│    │ │
+│  │  │              │ │  (Alloy)     │ │              │ │                │    │ │
 │  │  └──────────────┘ └──────────────┘ └──────────────┘ └──────────────┘      │ │
 │  └────────────────────────────────────────────────────────────────────────────┘ │
 │                                                                                  │
 └─────────────────────────────────────────────────────────────────────────────────┘
 ```
+
+**Wallet and EVM**: Wallet (Canton external party identity + optional EVM address derivation) and EthereumAdapter (Alloy-based) — см. **research/09-canton-wallet-evm-integration.md**.
 
 ## 2. Crate Structure
 
@@ -128,6 +134,14 @@ canton-sdk/
 │   │       ├── hash.rs
 │   │       ├── merkle.rs
 │   │       └── random.rs
+│   │
+│   ├── canton-wallet/                  # Canton external party + EVM identity (see 09)
+│   │   ├── Cargo.toml
+│   │   └── src/
+│   │       ├── lib.rs
+│   │       ├── wallet.rs               # Wallet trait, party_id_for_canton, sign_for_*
+│   │       ├── party_id.rs             # partyHint::fingerprint format
+│   │       └── derivation.rs           # BIP-39/44 Canton + EVM from mnemonic
 │   │
 │   ├── canton-transport/               # Transport layer
 │   │   ├── Cargo.toml
@@ -1434,3 +1448,7 @@ This architecture provides:
 6. **Performance**: Connection pooling, streaming, batching
 7. **Security**: HSM support, secure key management
 8. **Testability**: Mock implementations, test utilities
+
+## References and Related Research
+
+- **09-canton-wallet-evm-integration.md** — Canton external party (wallet) flow, Party ID format (`partyHint::fingerprint`), Ledger API auth (JWT/mTLS, actAs), EVM в Rust (Alloy вместо ethers-rs), интеграция Wallet + EthereumAdapter.
