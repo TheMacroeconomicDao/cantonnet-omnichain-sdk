@@ -88,7 +88,7 @@
 
 ## 5. Полезные ссылки (если попросят углубиться)
 
-- В репо: `DEVELOPMENT_PROMPT.md`, `research/08-sdk-architecture-design.md`, `research/09-canton-wallet-evm-integration.md`, `research/01-canton-network-architecture.md`, `research/04-daml-ledger-api.md`.
+- В репо: `DEVELOPMENT_PROMPT.md`, `PRE_DEVELOPMENT_CHECKLIST.md`, `docs/README.md`, `docs/DEVNET_PARTICIPANT.md` (участник DevNet для разработки), `research/08-sdk-architecture-design.md`, `research/09-canton-wallet-evm-integration.md`, `research/01-canton-network-architecture.md`, `research/04-daml-ledger-api.md`.
 - Canton: docs.canton.network, репо DACH-NY/canton.
 - Ledger API proto: github.com/digital-asset/daml (ledger-api/grpc-definitions).
 

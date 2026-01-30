@@ -1,16 +1,22 @@
-# Canton OmniChain SDK — пример конфигурации (разработка, DevNet).
-# Копировать в config/local.yaml и подставить свои значения (config/local.yaml в .gitignore).
-# DevNet: docs/DEVNET_PARTICIPANT.md. Production: config/example-production.yaml → config/local.yaml.
+# Canton OmniChain SDK — пример конфигурации для production.
+# Скопировать в config/local.yaml и подставить свои значения (config/local.yaml в .gitignore).
+# DevNet vs production: docs/DEVNET_PARTICIPANT.md.
 
-# Ledger API participant (по умолчанию — DevNet для разработки; для прода переопределить в config/local.yaml)
+# Ledger API participant (production: свой хост, порт, TLS)
 ledger_api:
-  grpc_host: "65.108.15.30"
-  grpc_port: 30501
-  http_url: "http://65.108.15.30:30757"
-  tls: false
+  grpc_host: "participant.your-domain.com"
+  grpc_port: 5001
+  http_url: "https://participant.your-domain.com/ledger"   # опционально
+  tls: true
+  tls_certs:
+    ca_cert_path: "/etc/ssl/canton/ca.pem"
+    client_cert_path: "/etc/ssl/canton/client.pem"
+    client_key_path: "/etc/ssl/canton/client.key"
+  connect_timeout: "10s"
+  request_timeout: "30s"
 
 canton:
-  endpoint: "https://canton.example.com:6865"
+  endpoint: "https://canton.your-domain.com:6865"
   tls:
     ca_cert_path: "/etc/ssl/certs/ca.pem"
     client_cert_path: "/etc/ssl/certs/client.pem"
@@ -52,8 +58,8 @@ omnichain:
     - cosmos
   chains:
     ethereum:
-      rpc_url: "https://eth.example.com"
+      rpc_url: "https://eth.your-domain.com"
       chain_id: 1
     cosmos:
-      rpc_url: "https://cosmos.example.com"
+      rpc_url: "https://cosmos.your-domain.com"
       chain_id: "cosmoshub-4"
