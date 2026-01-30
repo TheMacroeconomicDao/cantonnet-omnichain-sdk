@@ -184,11 +184,9 @@ impl WalletBuilder {
             .unwrap_or_else(|| "wallet".to_string());
 
         match &self.strategy {
-            DerivationStrategy::Unified { .. } => {
-                return Err(SdkError::Config(
-                    "unified mnemonic derivation not yet implemented; use per_chain with KeyStore sources".into(),
-                ));
-            }
+            DerivationStrategy::Unified { .. } => Err(SdkError::Config(
+                "unified mnemonic derivation not yet implemented; use per_chain with KeyStore sources".into(),
+            )),
             DerivationStrategy::PerChain { sources } => {
                 let mut keys_by_network = HashMap::new();
                 for (network, source) in sources {

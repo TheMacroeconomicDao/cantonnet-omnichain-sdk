@@ -6,16 +6,19 @@ use tonic::transport::Channel;
 use tonic::Status;
 
 use crate::generated::com::daml::ledger::api::v2::{
-    state_service_client::StateServiceClient, GetLedgerEndRequest,
+    command_submission_service_client::CommandSubmissionServiceClient,
+    state_service_client::StateServiceClient,
+    GetLedgerEndRequest, SubmitRequest,
 };
 
 /// Ledger API v2 client. Holds gRPC channel and service stubs.
 #[derive(Clone)]
-#[allow(dead_code)] // channel kept for future service clients
 pub struct LedgerClient {
+    #[allow(dead_code)] // kept for future service clients and Clone
     channel: Channel,
     ledger_id: String,
     state: StateServiceClient<Channel>,
+    command_submission: CommandSubmissionServiceClient<Channel>,
 }
 
 impl LedgerClient {
@@ -38,10 +41,12 @@ impl LedgerClient {
             })?;
         let ledger_id = ledger_id.into();
         let state = StateServiceClient::new(channel.clone());
+        let command_submission = CommandSubmissionServiceClient::new(channel.clone());
         Ok(Self {
             channel,
             ledger_id,
             state,
+            command_submission,
         })
     }
 
@@ -61,6 +66,19 @@ impl LedgerClient {
             .map_err(grpc_status_to_sdk_error)?;
         let offset = response.into_inner().offset;
         Ok(LedgerOffset::absolute(offset.to_string()))
+    }
+
+    /// Submit commands to the ledger. Uses proto Commands (built from canton_core::types::Commands
+    /// via a conversion layer when needed).
+    pub async fn submit(&mut self, commands: crate::generated::com::daml::ledger::api::v2::Commands) -> SdkResult<()> {
+        let request = SubmitRequest {
+            commands: Some(commands),
+        };
+        self.command_submission
+            .submit(request)
+            .await
+            .map_err(grpc_status_to_sdk_error)?;
+        Ok(())
     }
 }
 
