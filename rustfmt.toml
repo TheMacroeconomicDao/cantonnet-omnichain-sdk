@@ -1,0 +1,202 @@
+# Rustfmt configuration for Canton Wallet SDK
+
+# Edition
+edition = "2024"
+
+# Maximum line width
+max_width = 100
+
+# Hard tabs
+hard_tabs = false
+
+# Tab spaces
+tab_spaces = 4
+
+# Newline style
+newline_style = "Unix"
+
+# Use small heuristics
+use_small_heuristics = "Default"
+
+# Indent style
+indent_style = "Block"
+
+# Wrap comments
+wrap_comments = true
+
+# Format comments
+format_code_in_doc_comments = true
+
+# Comment width
+comment_width = 100
+
+# Normalize comments
+normalize_comments = true
+
+# Normalize doc attributes
+normalize_doc_attributes = true
+
+# License template path
+license_template_path = ""
+
+# Format strings
+format_strings = true
+
+# Format macro matchers
+format_macro_matchers = true
+
+# Format macro bodies
+format_macro_bodies = true
+
+# Hex literal case
+hex_literal_case = "Lower"
+
+# Imports indent
+imports_indent = "Block"
+
+# Imports layout
+imports_layout = "Mixed"
+
+# Match block trailing comma
+match_block_trailing_comma = false
+
+# Match arm blocks
+match_arm_blocks = true
+
+# Match arm leading pipes
+match_arm_leading_pipes = "Never"
+
+# Force multiline match blocks
+force_multiline_blocks = false
+
+# Fn args layout
+fn_args_layout = "Tall"
+
+# Fn call width
+fn_call_width = 80
+
+# Fn single line
+fn_single_line = false
+
+# Where style
+where_style = "Rfc"
+
+# Remove nested parens
+remove_nested_parens = true
+
+# Reorder impl items
+reorder_impl_items = true
+
+# Reorder imports
+reorder_imports = true
+
+# Reorder modules
+reorder_modules = true
+
+# Report fixme
+report_fixme = "Always"
+
+# Report todo
+report_todo = "Always"
+
+# Skip children
+skip_children = false
+
+# Struct field align threshold
+struct_field_align_threshold = 0
+
+# Struct lit single line
+struct_lit_single_line = true
+
+# Struct variant width
+struct_variant_width = 35
+
+# Use try shorthands
+use_try_shorthand = false
+
+# Use field init shorthand
+use_field_init_shorthand = true
+
+# Force explicit type
+force_explicit_abi = true
+
+# Chain width
+chain_width = 60
+
+# Single line if else max width
+single_line_if_else_max_width = 50
+
+# Space after colon
+space_after_colon = true
+
+# Space before colon
+space_before_colon = false
+
+# Spaces around ranges
+spaces_around_ranges = false
+
+# Type punctuation density
+type_punctuation_density = "Wide"
+
+# Control brace style
+control_brace_style = "AlwaysSameLine"
+
+# Brace style
+brace_style = "SameLineWhere"
+
+# Empty item single line
+empty_item_single_line = true
+
+# Enum discriminant align threshold
+enum_discrim_align_threshold = 0
+
+# Trailing comma
+trailing_comma = "Vertical"
+
+# Trailing semicolon
+trailing_semicolon = true
+
+# Version
+version = "Two"
+
+# Inline attribute width
+inline_attribute_width = 0
+
+# Blank lines upper bound
+blank_lines_upper_bound = 1
+
+# Blank lines lower bound
+blank_lines_lower_bound = 0
+
+# Group imports
+group_imports = "StdExternalCrate"
+
+# Unstable features
+unstable_features = []
+
+# Disable formatting
+disable_all_formatting = false
+
+# Error on line overflow
+error_on_line_overflow = false
+
+# Error on unformatted
+error_on_unformatted = false
+
+# Hide parse errors
+hide_parse_errors = true
+
+# Color
+color = "Auto"
+
+# Required version
+required_version = "1.8.0"
+
+# Ignore
+ignore = []
+
+# Emit mode
+emit_mode = "Files"
+
+# Make backup
+make_backup = false

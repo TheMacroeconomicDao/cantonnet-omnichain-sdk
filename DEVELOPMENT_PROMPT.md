@@ -867,7 +867,7 @@ The following research documents provide detailed specifications:
 
 ## ⚠️ CRITICAL CONSTRAINTS
 
-1. **NO MOCKS OR STUBS** - All code must be production-ready
+1. **NO MOCKS OR STUBS OR TODOS** - All code must be production-ready
 2. **NO PLACEHOLDER IMPLEMENTATIONS** - Every function must be complete
 3. **NO UNSAFE CODE** - Unless absolutely necessary with documentation
 4. **NO BLOCKING IN ASYNC** - Use proper async patterns

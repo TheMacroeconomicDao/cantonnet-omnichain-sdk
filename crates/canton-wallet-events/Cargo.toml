@@ -1,0 +1,55 @@
+# Copyright 2025 Canton Wallet SDK Contributors
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+[package]
+name = "canton-wallet-events"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+authors = ["Canton Wallet SDK Contributors"]
+license = "Apache-2.0"
+repository = "https://github.com/your-org/canton-wallet-sdk"
+homepage = "https://github.com/your-org/canton-wallet-sdk"
+description = "Event streaming for Canton Wallet SDK"
+keywords = ["canton", "wallet", "events", "streaming"]
+categories = ["cryptography", "api-bindings"]
+
+[dependencies]
+# Core types
+canton-wallet-core = { path = "../canton-wallet-core" }
+canton-ledger-api = { path = "../canton-ledger-api" }
+
+# Async Runtime
+tokio = { version = "1.45", features = ["full", "tracing"] }
+tokio-stream = "0.1"
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Error Handling
+thiserror = "2.0"
+anyhow = "1.0"
+
+# Logging & Tracing
+tracing = "0.1"
+
+# Utilities
+uuid = { version = "1.11", features = ["v4", "v7", "serde"] }
+futures = "0.3"
+async-stream = "0.3"
+
+[dev-dependencies]
+tokio-test = "0.4"
+rstest = "0.23"

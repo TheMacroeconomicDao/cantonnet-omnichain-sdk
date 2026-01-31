@@ -1848,6 +1848,17 @@ This project builds upon the excellent work of:
 
 ---
 
+## ⚠️ CRITICAL CONSTRAINTS
+
+1. **NO MOCKS OR STUBS OR TODOS** - All code must be production-ready
+2. **NO PLACEHOLDER IMPLEMENTATIONS** - Every function must be complete
+3. **NO UNSAFE CODE** - Unless absolutely necessary with documentation
+4. **NO BLOCKING IN ASYNC** - Use proper async patterns
+5. **NO HARDCODED VALUES** - Everything must be configurable
+6. **NO SECRETS IN CODE** - Use environment variables or config files
+
+---
+
 **END OF DEVELOPMENT PROMPT**
 
 This document provides a complete, self-contained specification for developing a production-ready Canton Wallet SDK in Rust. All necessary information, including architecture, implementation details, testing strategies, and best practices, has been compiled from comprehensive research across multiple blockchain ecosystems and Canton Network specifics.

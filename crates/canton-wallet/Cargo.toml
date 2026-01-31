@@ -1,0 +1,79 @@
+[package]
+name = "canton-wallet"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Canton Wallet SDK - Main facade crate"
+keywords = ["canton", "wallet", "blockchain", "daml", "ledger"]
+categories = ["cryptography", "api-bindings"]
+
+[dependencies]
+# Core dependencies
+canton-wallet-core = { path = "../canton-wallet-core" }
+canton-wallet-crypto = { path = "../canton-wallet-crypto" }
+canton-ledger-api = { path = "../canton-ledger-api" }
+canton-wallet-transactions = { path = "../canton-wallet-transactions" }
+canton-wallet-contracts = { path = "../canton-wallet-contracts" }
+canton-wallet-events = { path = "../canton-wallet-events" }
+canton-wallet-security = { path = "../canton-wallet-security" }
+canton-wallet-recovery = { path = "../canton-wallet-recovery" }
+canton-wallet-omnichain = { path = "../canton-wallet-omnichain" }
+canton-observability = { path = "../canton-observability" }
+canton-reliability = { path = "../canton-reliability" }
+canton-transport = { path = "../canton-transport" }
+
+# Async runtime
+tokio = { workspace = true }
+
+# Serialization
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+# Error handling
+thiserror = { workspace = true }
+anyhow = { workspace = true }
+
+# Logging & tracing
+tracing = { workspace = true }
+
+# Cryptography
+ed25519-dalek = { workspace = true }
+sha2 = { workspace = true }
+blake3 = { workspace = true }
+
+# HD Wallets
+bip39 = { workspace = true }
+bip32 = { workspace = true }
+
+# Utilities
+bytes = { workspace = true }
+uuid = { workspace = true }
+chrono = { workspace = true }
+url = { workspace = true }
+dashmap = { workspace = true }
+parking_lot = { workspace = true }
+arc-swap = { workspace = true }
+
+# Configuration
+config = { workspace = true }
+dotenvy = { workspace = true }
+
+# Validation
+validator = { workspace = true }
+
+# Decimal arithmetic
+rust_decimal = { workspace = true }
+
+# Async utilities
+async-trait = "0.1"
+futures = "0.3"
+async-stream = "0.3"
+
+[dev-dependencies]
+tokio-test = { workspace = true }
+criterion = { workspace = true }
+proptest = { workspace = true }
+rstest = { workspace = true }

@@ -1,0 +1,35 @@
+[build]
+target-dir = "target"
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+strip = true
+panic = "abort"
+
+[profile.dev]
+opt-level = 0
+debug = true
+split-debuginfo = "unpacked"
+
+[profile.test]
+opt-level = 1
+debug = true
+
+[profile.bench]
+inherits = "release"
+debug = true
+
+[net]
+git-fetch-with-cli = true
+
+[http]
+check-revoke = false
+
+[registries.crates-io]
+protocol = "sparse"
+
+[env]
+RUST_BACKTRACE = "1"
+RUST_LOG = "info"

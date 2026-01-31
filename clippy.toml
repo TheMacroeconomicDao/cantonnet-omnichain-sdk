@@ -1,0 +1,103 @@
+# Clippy configuration for Canton Wallet SDK
+
+# Cognitive complexity threshold
+cognitive-complexity-threshold = 30
+
+# Type complexity threshold
+type-complexity-threshold = 250
+
+# Single char binding names threshold
+single-char-binding-names-threshold = 4
+
+# Literal representation threshold
+literal-representation-threshold = 30
+
+# Array size threshold for large arrays
+array-size-threshold = 512000
+
+# Vec box size threshold
+vec-box-size-threshold = 4096
+
+# Stack size threshold
+stack-size-threshold = 512000
+
+# Verbosity threshold
+verbose-bit-mask-threshold = 1
+
+# Documentation
+missing-docs-in-private-items = false
+
+# Disallowed methods
+disallowed-methods = []
+
+# Disallowed types
+disallowed-types = []
+
+# Disallowed scripts
+disallowed-scripts = []
+
+# Disallowed macros
+disallowed-macros = []
+
+# Standard macro braces
+standard-macro-braces = []
+
+# Enforced import renames
+enforced-import-renames = []
+
+# Allowed duplicate crates
+allowed-duplicate-crates = []
+
+# Suppressions
+suppress-restriction-lint-in-const = false
+
+# Maximum trait bounds
+max-trait-bounds = 3
+
+# Maximum include file size
+max-include-file-size = 1000000
+
+# Split threshold for large files
+too-large-for-stack = 200
+
+# Too many arguments threshold
+too-many-arguments-threshold = 7
+
+# Too many lines threshold
+too-many-lines-threshold = 100
+
+# Blacklisted names
+blacklisted-names = ["foo", "bar", "baz", "quux"]
+
+# Allow expect in tests
+allow-expect-in-tests = true
+
+# Allow unwrap in tests
+allow-unwrap-in-tests = true
+
+# Allow print in tests
+allow-print-in-tests = true
+
+# Allow dbg in tests
+allow-dbg-in-tests = true
+
+# Allow mixed hex in literals
+allow-mixed-uninlined-format-args = false
+
+# Allow one index in string slice
+allow-one-hash-in-raw-strings = false
+
+# Allow private interop mangled functions
+allow-private-module-inception = false
+
+# Allow print in examples
+allow-print-in-examples = true
+
+# Allow unwrap in examples
+allow-unwrap-in-examples = true
+
+# Allow expect in examples
+allow-expect-in-examples = true
+
+# Allow dbg in examples
+allow-dbg-in-examples = true

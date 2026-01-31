@@ -1,0 +1,123 @@
+# Rust
+/target/
+**/*.rs.bk
+*.pdb
+Cargo.lock
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Build artifacts
+*.o
+*.a
+*.so
+*.dylib
+*.dll
+*.exe
+
+# Test artifacts
+*.profraw
+*.profdata
+
+# Documentation
+/doc/
+/docs/book/
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Temporary files
+*.tmp
+*.temp
+/tmp/
+
+# Logs
+*.log
+/logs/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Keys and secrets (never commit these!)
+*.key
+*.pem
+*.p12
+*.pfx
+*.der
+*.crt
+*.cer
+secrets/
+wallets/
+keystore/
+
+# Coverage
+tarpaulin-report.html
+cobertura.xml
+lcov.info
+
+# Benchmark
+criterion/
+
+# Fuzz
+fuzz/
+artifacts/
+corpus/
+
+# OS
+Thumbs.db
+.DS_Store
+*.swp
+*~
+
+# Package manager
+.cargo/registry/
+.cargo/git/
+
+# Build cache
+.cargo/bin/
+.cargo/deps/
+
+# Rust Analyzer
+.rust-analyzer/
+
+# Next.js (if any web components)
+.next/
+out/
+build/
+
+# Node (if any web components)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python (if any Python components)
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv
+
+# Docker
+.dockerignore
+
+# CI/CD
+.github/workflows/*.log
